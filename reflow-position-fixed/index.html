@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" value="initial-scale=1.0,width=device-width">
+    <title>Toggle visibility w/Fixed-height header</title>
+    <style>
+      * {
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        -webkit-margin-start: 0;
+        -webkit-margin-end: 0;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100%;
+        background-color: #fdf6e3;
+        color: #586e75;
+      }
+      hr {
+        border: none;
+      }
+      button {
+        cursor: pointer;
+        display: inline-block;
+        outline: none;
+        border: none;
+        vertical-align: baseline;
+        background-color: #2aa198;
+        margin: 0 0.25rem 0 0;
+        padding: 0.7rem 1.3rem;
+        border-radius: 0.29rem;
+        box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.2) inset;
+        font-weight: bold;
+        font-size: 1.76rem;
+        color: #eee8d5;
+      }
+      header {
+        position: fixed;
+        z-index: 20;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        height: 5rem;
+        line-height: 5rem;
+        background-color: #002b36;
+        color: #93a1a1;
+        text-align: center;
+      }
+      menu, main {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 85%;
+      }
+      header + * {
+        padding-top: 5.5rem;
+      }
+      #output li {
+        font-family: monospace;
+      }
+      #sub {
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+        padding-left: 0;
+        border: dotted 1px #ccc;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><button id="toggle-menu">Toggle Menu</button></p>
+    </header>
+    <hr>
+    <menu id="sub" class="hidden">
+      <li>Home</li>
+      <li>New Entry</li>
+      <li>Archive</li>
+    </menu>
+    <main>
+      <h1>Main</h1>
+      <ul id="output"></ul>
+    </main>
+    <script>
+      function output() {
+        var measureName = 'menu-performance';
+        performance.measure(measureName, 'menu.clicked', 'menu.visible');
+        var entries = performance.getEntriesByType('measure');
+        performance.clearMeasures(measureName);
+        var entryElements = entries.map(function (entry) {
+          var now = new Date();
+          var li = document.createElement('li');
+          li.dataset.rawValue = entry.duration;
+          li.textContent = entry.duration + ' msec @ ' + now;
+          return li;
+        });
+        var fragment = document.createDocumentFragment();
+        entryElements.forEach(function (el) { fragment.appendChild(el) });
+        document.getElementById('output').appendChild(fragment);
+      }
+      var fired = false;
+      var target = document.getElementById('sub');
+      var action = document.getElementById('toggle-menu');
+      action.addEventListener('click', function (event) {
+        event.preventDefault();
+        performance.mark('menu.clicked');
+        target.classList.toggle('hidden');
+      });
+      setInterval(function () {
+        if (!fired && target.clientHeight > 0) {
+          fired = !fired;
+          performance.mark('menu.visible');
+          output();
+        } else if (fired && target.clientHeight <= 0) {
+          fired = !fired;
+        }
+      }, 0);
+    </script>
+  </body>
+</html>
