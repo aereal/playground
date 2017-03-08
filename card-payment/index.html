@@ -39,7 +39,7 @@
         </form>
         <dl class="uk-description-list uk-description-list-divider">
           <dt>手数料</dt>
-          <dd>&#xFFE5;{{ totalCharge }}</dd>
+          <dd>&#xFFE5;{{ totalCharge }} ({{ chargePercentage }}%)</dd>
           <dt>支払い総額</dt>
           <dd>&#xFFE5;{{ totalPrice }}</dd>
           <dt>月毎支払い額</dt>
@@ -77,6 +77,9 @@
         },
         pricePerMonth() {
           return this.totalPrice / this.$data.selected_installation.count;
+        },
+        chargePercentage() {
+          return this.totalPrice === 0 ? 0 : this.totalCharge / this.totalPrice * 100;
         }
       },
     });
