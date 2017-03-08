@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Card Payment</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.16/css/uikit.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.16/js/uikit.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.2.1/vue.min.js"></script>
+  </head>
+  <body>
+    <main class="uk-container uk-container-expand">
+      <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+        <form class="uk-form-stacked">
+          <fieldset class="uk-fieldset">
+            <label for="price" class="uk-form-label">金額</label>
+            <div class="uk-form-controls">
+              <input id="price" type="number" class="uk-input uk-form-large" v-model.number="price">
+            </div>
+          </fieldset>
+          <fieldset class="uk-fieldset">
+            <label for="installation" class="uk-form-label">支払い回数</label>
+            <div class="uk-form-controls">
+              <select class="uk-select uk-form-large" v-model="selected_installation">
+                <option
+                  v-for="installation in available_installations"
+                  v-model="selected_installation"
+                  v-bind:value="installation"
+                >
+                  {{ installation.count }}
+                </option>
+              </select>
+            </div>
+          </fieldset>
+        </form>
+        <dl class="uk-description-list uk-description-list-divider">
+          <dt>手数料</dt>
+          <dd>{{ totalCharge }}</dd>
+          <dt>支払い総額</dt>
+          <dd>{{ totalPrice }}</dd>
+          <dt>月毎支払い額</dt>
+          <dd>{{ pricePerMonth }}</dd>
+        </dl>
+      </div>
+    </main>
+    <script>
+    const availableInstallations = [
+      { count: 1,  charge: 0 },
+      { count: 2,  charge: 0 },
+      { count: 3,  charge: 1.71 },
+      { count: 5,  charge: 2.85 },
+      { count: 6,  charge: 3.42 },
+      { count: 10, charge: 5.70 },
+      { count: 12, charge: 6.84 },
+      { count: 15, charge: 8.55 },
+      { count: 18, charge: 10.26 },
+      { count: 20, charge: 11.40 },
+      { count: 24, charge: 13.68 },
+    ];
+    const main = new Vue({
+      el: 'main',
+      data: {
+        price: 0,
+        selected_installation: availableInstallations[0],
+        available_installations: availableInstallations,
+      },
+      computed: {
+        totalCharge() {
+          return (this.$data.price / 100) * this.$data.selected_installation.charge;
+        },
+        totalPrice() {
+          return this.$data.price + this.totalCharge;
+        },
+        pricePerMonth() {
+          return this.totalPrice / this.$data.selected_installation.count;
+        }
+      },
+    });
+    </script>
+  </body>
+</html>
