@@ -16,7 +16,10 @@
           <fieldset class="uk-fieldset">
             <label for="price" class="uk-form-label">金額</label>
             <div class="uk-form-controls">
-              <input id="price" type="number" class="uk-input uk-form-large" v-model.number="price">
+              <div class="uk-inline" style="width: 100%;">
+                <span class="uk-form-icon">&#xFFE5;</span>
+                <input id="price" type="number" class="uk-input uk-form-large" v-model.number="price">
+              </div>
             </div>
           </fieldset>
           <fieldset class="uk-fieldset">
@@ -36,11 +39,11 @@
         </form>
         <dl class="uk-description-list uk-description-list-divider">
           <dt>手数料</dt>
-          <dd>{{ totalCharge }}</dd>
+          <dd>&#xFFE5;{{ totalCharge }}</dd>
           <dt>支払い総額</dt>
-          <dd>{{ totalPrice }}</dd>
+          <dd>&#xFFE5;{{ totalPrice }}</dd>
           <dt>月毎支払い額</dt>
-          <dd>{{ pricePerMonth }}</dd>
+          <dd>&#xFFE5;{{ pricePerMonth }}</dd>
         </dl>
       </div>
     </main>
