@@ -3,7 +3,10 @@ module github.com/aereal/playground
 go 1.16
 
 require (
-	github.com/dimfeld/httptreemux v5.0.1+incompatible
+	github.com/aws/aws-sdk-go v1.40.29
+	github.com/aws/aws-sdk-go-v2 v1.8.1
+	github.com/aws/aws-sdk-go-v2/config v1.6.1
+	github.com/aws/aws-sdk-go-v2/service/ecs v1.8.1
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v38 v38.1.0
 	github.com/k1LoW/exec v0.2.0
