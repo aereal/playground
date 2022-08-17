@@ -1,9 +1,8 @@
-module github.com/aereal/playground
+module github.com/aereal/playground/run-actionlint
 
 go 1.16
 
 require (
-	github.com/dimfeld/httptreemux v5.0.1+incompatible
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v38 v38.1.0
 	github.com/k1LoW/exec v0.2.0
