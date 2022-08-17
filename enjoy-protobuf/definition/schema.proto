@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+message Definition {
+  map<string, Liver> livers = 1;
+}
+
+message Liver {
+  string name = 1;
+  optional int32 age = 2;
+}
